@@ -1,19 +1,23 @@
+import Hero from "../components/Hero";
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0b0d0c] text-white">
-      <section className="flex min-h-screen items-center justify-center px-6">
+    <main className="flex-1 bg-[#0b0d0c] text-white">
+      <Hero />
+
+      {/* Library section will be added in the next step */}
+      <section
+        id="library"
+        className="flex min-h-[500px] items-center justify-center px-6"
+      >
         <div className="text-center">
-          <p className="mb-3 text-sm font-bold tracking-[0.3em] text-[#ccff00]">
-            WORKOUT LIBRARY
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#ccff00]">
+            Coming Next
           </p>
 
-          <h1 className="text-4xl font-black tracking-tight md:text-6xl">
-            FITLOG
-          </h1>
-
-          <p className="mt-4 text-sm text-gray-400">
-            Train with intent. Log every set.
-          </p>
+          <h2 className="mt-4 text-4xl font-black uppercase">
+            The Library
+          </h2>
         </div>
       </section>
     </main>
