@@ -15,8 +15,6 @@ export default function MyPlanPage() {
   const [plan, setPlan] = useState([]);
   const [saved, setSaved] = useState([]);
   const [activeTab, setActiveTab] = useState("plan");
-
-  // Default sorting: Duration
   const [sortBy, setSortBy] = useState("duration");
 
   useEffect(() => {
@@ -86,7 +84,6 @@ export default function MyPlanPage() {
 
   const currentList = activeTab === "plan" ? plan : saved;
 
-  // SORTING
   const sortedList = [...currentList].sort((a, b) => {
     if (sortBy === "duration") {
       return Number(b.duration || 0) - Number(a.duration || 0);
@@ -191,6 +188,7 @@ export default function MyPlanPage() {
 
         {/* TABS + SORT */}
         <div className="mt-8 flex flex-col gap-4 border-b border-[#292d2b] pb-3 sm:flex-row sm:items-end sm:justify-between">
+
           {/* TABS */}
           <div className="flex">
             <button
@@ -224,7 +222,7 @@ export default function MyPlanPage() {
             </button>
           </div>
 
-          {/* SORT DROPDOWN */}
+          {/* SORT */}
           <div className="flex items-center gap-2">
             <label
               htmlFor="sort"
@@ -282,12 +280,13 @@ export default function MyPlanPage() {
             {sortedList.map((workout) => (
               <article
                 key={workout.id}
-                className={`group grid overflow-hidden border border-[#292d2b] bg-[#121419] transition ${
+                className={`grid overflow-hidden border border-[#292d2b] bg-[#121419] transition ${
                   workout.done
                     ? "opacity-60"
                     : "hover:border-[#444a47]"
                 } md:grid-cols-[180px_1fr_auto]`}
               >
+
                 {/* IMAGE */}
                 <div className="relative h-48 bg-[#0b0d0c] md:h-full">
                   <img
@@ -305,7 +304,7 @@ export default function MyPlanPage() {
                   )}
                 </div>
 
-                {/* CONTENT */}
+                {/* WORKOUT CONTENT */}
                 <div className="min-w-0 p-5">
                   <div className="flex flex-wrap gap-2">
                     {workout.muscleGroups?.map((muscle) => (
@@ -331,14 +330,8 @@ export default function MyPlanPage() {
                     <span>★ {workout.rating}</span>
                   </div>
 
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    <Link
-                      href={`/workouts/${workout.id}`}
-                      className="border border-[#292d2b] px-4 py-2.5 text-[10px] font-black uppercase tracking-wider text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
-                    >
-                      View Details
-                    </Link>
-
+                  {/* MARK AS DONE */}
+                  <div className="mt-5">
                     {activeTab === "plan" && !workout.done && (
                       <button
                         onClick={() => handleMarkDone(workout.id)}
@@ -349,15 +342,25 @@ export default function MyPlanPage() {
                     )}
 
                     {activeTab === "plan" && workout.done && (
-                      <span className="flex items-center px-4 py-2.5 text-[10px] font-black uppercase tracking-wider text-[#ccff00]">
+                      <span className="inline-flex items-center text-[10px] font-black uppercase tracking-wider text-[#ccff00]">
                         ✓ Completed
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* REMOVE */}
-                <div className="flex items-start justify-end p-4 md:p-5">
+                {/* RIGHT SIDE ACTIONS */}
+                <div className="flex items-center justify-end gap-2 p-4 md:p-5">
+
+                  {/* VIEW DETAILS */}
+                  <Link
+                    href={`/workouts/${workout.id}`}
+                    className="border border-[#292d2b] px-4 py-2.5 text-[10px] font-black uppercase tracking-wider text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
+                  >
+                    View Details
+                  </Link>
+
+                  {/* REMOVE */}
                   <button
                     onClick={() =>
                       activeTab === "plan"
@@ -365,10 +368,11 @@ export default function MyPlanPage() {
                         : handleRemoveSaved(workout.id)
                     }
                     aria-label={`Remove ${workout.name}`}
-                    className="flex h-8 w-8 items-center justify-center border border-[#292d2b] text-sm text-[#8b918d] transition hover:border-red-400 hover:text-red-400"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center border border-[#292d2b] text-lg leading-none text-[#8b918d] transition hover:border-red-400 hover:text-red-400"
                   >
                     ×
                   </button>
+
                 </div>
               </article>
             ))}
@@ -378,3 +382,4 @@ export default function MyPlanPage() {
     </main>
   );
 }
+
